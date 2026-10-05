@@ -1,0 +1,64 @@
+description: '"Silkroad Genesis"'
+game_slug: silkroad-genesis
+gogslug: ''
+humblestoreid: ''
+installer_slug: silkroad-genesis
+name: Silkroad Genesis
+notes: |
+  - During install, you will need to provide "Silkroad Genesis" full client in rar format available for download at https://www.silkroadgenesis.com/downloads
+  - Before the first launch, install GE-Proton10-4 or GE-Proton10-10 using ProtonUp-Qt, Heroic, or manually under Steam's compatibilitytools.d directory.
+  - In Lutris: Configure → Runner options → Wine version → select GE-Proton10-4.
+  - Enable DXVK only; disable Esync, Fsync, FSR, BattlEye, and Easy Anti-Cheat.
+runner: wine
+script:
+  custom-name: Silkroad Genesis
+  files:
+  - pots: N/A:Please select the Full client archive in rar format downloaded at https://www.silkroadgenesis.com/downloads
+  game:
+    exe: drive_c/SilkroadGenesis/silkroad.exe
+    prefix: $GAMEDIR
+  installer:
+  - task:
+      arch: win64
+      install_gecko: true
+      install_mono: true
+      name: create_prefix
+      prefix: $GAMEDIR
+  - task:
+      name: set_regedit
+      prefix: $GAMEDIR
+      key: HKEY_CURRENT_USER\Software\Wine\Debugger
+      value: ''
+      type: REG_SZ
+      path: ''
+  - task:
+      name: set_regedit
+      prefix: $GAMEDIR
+      key: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
+      value: 0
+      type: REG_DWORD
+      path: Debugger
+  - task:
+      name: set_regedit
+      prefix: $GAMEDIR
+      key: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
+      value: 0
+      type: REG_DWORD
+      path: Auto
+  - task:
+      app: vcrun2022 dotnet48 d3dx9 corefonts msxml6
+      name: winetricks
+      prefix: $GAMEDIR
+  - extract:
+      dst: $GAMEDIR/drive_c/SilkroadGenesis
+      src: pots
+  wine:
+    dxvk: true
+    esync: false
+    fsync: false
+    Desktop: true
+slug: silkroad-genesis
+steamid: null
+version: Silkroad Genesis
+year: 2005
+
